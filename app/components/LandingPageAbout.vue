@@ -15,7 +15,7 @@
         </section>
 
         <section class="about-right">
-            <img src="/images/dashboard.png" alt="StudyFlow">
+            <img src="/images/dashboard.png" alt="StudyFlow" class="dashboard-img">
         </section>
     </article>
 </template>

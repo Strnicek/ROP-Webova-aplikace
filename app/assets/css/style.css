@@ -4,6 +4,7 @@
    --button-bg: #3D2762;
    --white-text: #ffffff;
    --small-text: #8F8F8F;
+   --line-color: #29294A;
    --main-font: 'Alexandria', sans-serif;
    --font-secondary: 'Baloo Bhai 2', sans-serif;
 }
@@ -23,7 +24,7 @@ header{
     padding: 10px 30px 10px 30px;
 }
 nav p {
-    font-size: 20px;
+    font-size: 16px;
 }
 nav {
     display: flex;
@@ -104,7 +105,7 @@ nav {
     font-weight: 350;
     text-align: center;
 }
-.main-text-gradient {
+.text-gradient {
     background: linear-gradient(90deg, #9b51e0, #2f80ed);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -112,7 +113,6 @@ nav {
 }
 .main-desc {
     max-width: 600px;
-
 }
 .main-desc-text {
     color: var(--small-text);
@@ -129,7 +129,7 @@ nav {
 .main-btn1 {
     color: var(--white-text);
     background-color: var(--background-1);
-    border: 1px solid var(--button-bg);
+    border: 2px solid var(--button-bg);
     padding: 15px 25px 15px 25px;
     border-radius: 15px;
     cursor: pointer;
@@ -169,6 +169,49 @@ nav {
 .about-right {
     padding-left: 100px;
 }
-img {
-    width: 800px;
+.dashboard-img {
+    width: 650px;
+}
+.functions-article {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    margin-top: 200px;
+}
+.app-headline {
+    color: var(--white-text);
+    text-align: center;
+    font-size: 40px;
+}
+.app-subtitle {
+    color: var(--white-text);
+    text-align: center;
+}
+.functions-top {
+   display: flex;
+   flex-direction: column;
+   gap:20px;
+}
+.functions {
+    display: flex;
+}
+.functions-left {
+    border-right: 2px solid var(--line-color);
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: 20px 80px 20px 50px;
+}
+.functions-headline {
+    color: var(--white-text);
+    font-size: 30px;
+}
+.functions-text {
+    color: var(--white-text);
+}
+.functions-text-border {
+    max-width: 550px;
+}
+.functions-right {
+    padding-left: 150px;
 }

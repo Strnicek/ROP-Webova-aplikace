@@ -5,7 +5,7 @@
         
         <div class="main-flex">
             <section class="main-info">
-            <h1 class="main-text"> Uč se chytře, <br> <span class="main-text-gradient"> Dosahuj lepších výsledků </span></h1>
+            <h1 class="main-text"> Uč se chytře, <br> <span class="text-gradient"> Dosahuj lepších výsledků </span></h1>
             </section>
 
             <section class="main-desc">
