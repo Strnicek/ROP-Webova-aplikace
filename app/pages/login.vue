@@ -5,11 +5,12 @@ import LoginPageRight from '~/components/LoginPageRight.vue';
 </script>
 
 <template>
-    <LandingPageHeader />
 
-    <article class="login-flex">
-        <LoginPageLeft />
-        <LoginPageRight />
+    <article class="login-center">
+        <section class="login-flex">
+            <LoginPageLeft />
+            <LoginPageRight />
+        </section>
     </article>
-    
+
 </template>
