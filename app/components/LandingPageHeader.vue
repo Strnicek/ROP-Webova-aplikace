@@ -13,8 +13,8 @@
         <p class="nav-link"> Kontakt </p>
     </nav>
     <div class="buttons-flex">
-        <button class="login-btn"> Přihlásit se </button>
-        <button class="register-btn"> Registrace </button>
+        <NuxtLink to="/login" class="login-btn"> Přihlásit se </NuxtLink>
+        <NuxtLink to="/register" class="register-btn"> Registrace </NuxtLink>
     </div>
 </header>
 
