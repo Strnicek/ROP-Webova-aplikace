@@ -1,21 +1,210 @@
+
 // use prisma-8
 
+// ==========================================
+// 1. UZIVATELE A PRIHLASOVANI
+// ==========================================
+
 model User {
-  id        Int                @id @default(autoincrement())
-  email     String             @unique
-  username  String?
-  name      String?
-  posts     Post[]
-  createdAt DateTime           @default(now()) @onCreate(now())
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  username     String   @unique
+  name         String?
+  passwordHash String
+
+  sessions      Session[]
+  passwordResets PasswordReset[]
+  subjects      Subject[]
+  tests         Test[]
+  attempts      TestAttempt[]
+  reminders     Reminder[]
+  activities    ActivityLog[]
+
+  createdAt DateTime @default(now()) @onCreate(now())
   updatedAt temporal.UpdatedAt
 }
 
-model Post {
-  id        Int                @id @default(autoincrement())
-  title     String
-  content   String?
-  author    User               @relation(fields: [authorId], references: [id])
-  authorId  Int
-  createdAt DateTime           @default(now()) @onCreate(now())
+model Session {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  tokenHash  String   @unique
+  rememberMe Boolean  @default(false)
+  expiresAt  DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @onCreate(now())
+}
+
+model PasswordReset {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  tokenHash String   @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @onCreate(now())
+}
+
+// ==========================================
+// 2. PREDMETY A ZAPISKY
+// ==========================================
+
+model Subject {
+  id     Int    @id @default(autoincrement())
+  userId Int
+  name   String
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notes Note[]
+  tests Test[]
+
+  createdAt DateTime @default(now()) @onCreate(now())
   updatedAt temporal.UpdatedAt
+
+  @@unique([userId, name])
+}
+
+model Note {
+  id        Int    @id @default(autoincrement())
+  subjectId Int
+  title     String
+  content   String
+
+  subject   Subject    @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  testNotes TestNote[]
+
+  createdAt DateTime @default(now()) @onCreate(now())
+  updatedAt temporal.UpdatedAt
+}
+
+// ==========================================
+// 3. TESTY A OTAZKY
+// ==========================================
+
+model Test {
+  id        Int    @id @default(autoincrement())
+  userId    Int
+  subjectId Int
+  title     String
+
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject   Subject     @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  testNotes TestNote[]
+  questions Question[]
+  shares    TestShare[]
+  attempts  TestAttempt[]
+
+  createdAt DateTime @default(now()) @onCreate(now())
+}
+
+model TestNote {
+  testId Int
+  noteId Int
+
+  test Test @relation(fields: [testId], references: [id], onDelete: Cascade)
+  note Note @relation(fields: [noteId], references: [id], onDelete: Cascade)
+
+  @@id([testId, noteId])
+}
+
+model Question {
+  id       Int    @id @default(autoincrement())
+  testId   Int
+  text     String
+  position Int
+
+  test    Test           @relation(fields: [testId], references: [id], onDelete: Cascade)
+  options AnswerOption[]
+  answers AttemptAnswer[]
+
+  @@unique([testId, position])
+}
+
+model AnswerOption {
+  id         Int     @id @default(autoincrement())
+  questionId Int
+  label      String
+  text       String
+  isCorrect  Boolean @default(false)
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  selectedIn AttemptAnswer[]
+
+  @@unique([questionId, label])
+}
+
+// ==========================================
+// 4. SDILENI A VYPLNOVANI TESTU
+// ==========================================
+
+model TestShare {
+  id        Int      @id @default(autoincrement())
+  testId    Int
+  token     String   @unique
+  expiresAt DateTime?
+  revokedAt DateTime?
+
+  test Test @relation(fields: [testId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @onCreate(now())
+}
+
+model TestAttempt {
+  id        Int      @id @default(autoincrement())
+  testId    Int
+  userId    Int
+  score     Int
+  maxScore  Int
+  completedAt DateTime @default(now()) @onCreate(now())
+
+  test    Test            @relation(fields: [testId], references: [id], onDelete: Cascade)
+  user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers AttemptAnswer[]
+
+  @@unique([testId, userId])
+}
+
+model AttemptAnswer {
+  id               Int   @id @default(autoincrement())
+  attemptId        Int
+  questionId       Int
+  selectedOptionId Int?
+  isCorrect        Boolean
+
+  attempt        TestAttempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question       Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  selectedOption AnswerOption? @relation(fields: [selectedOptionId], references: [id], onDelete: SetNull)
+
+  @@unique([attemptId, questionId])
+}
+
+// ==========================================
+// 5. KALENDAR A AKTIVITA
+// ==========================================
+
+model Reminder {
+  id      Int      @id @default(autoincrement())
+  userId  Int
+  title   String
+  content String?
+  date    DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @onCreate(now())
+}
+
+model ActivityLog {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  actionType String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @onCreate(now())
+
+  @@index([userId, createdAt])
 }
