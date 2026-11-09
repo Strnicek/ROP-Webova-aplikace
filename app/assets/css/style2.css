@@ -84,6 +84,7 @@
 .login-text {
     color: var(--small-text);
     max-width: 400px;
+    font-size: 16px;
 }
 .form-box {
     display: flex;
@@ -166,4 +167,82 @@ form {
     background-color: var(--white-text);
     color: var(--line-color);
     transform: scale(1.03);
+}
+
+@media (max-width: 1279px) {
+    .login-flex {
+        gap: 100px;
+        padding: 50px;
+    }
+    .login-headline {
+        font-size: 50px;
+    }
+    .login-text-gradient {
+        font-size: 25px;
+    }
+    .login-text {
+        font-size: 12px;
+    }
+}
+@media (max-width: 1024px) {
+    .login-flex {
+        flex-direction: column;
+    }
+    .form-box {
+        width: 100%;
+        max-width: 450px;
+        padding: 30px 20px;
+        box-sizing: border-box;
+    }
+    .login-headline {
+        text-align: center;
+    }
+    .login-text-gradient {
+        text-align: center;
+    }
+    .login-text {
+        text-align: center;
+    }
+    .login-left-inside {
+        align-items: center;
+    }
+    .login-left {
+        width: 100%;
+        max-width: 450px;
+        gap: 50px;
+        flex-direction: column-reverse;
+    }
+    .back-container {
+        align-items: center;
+    }
+    .back-inside {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .name-text {
+        text-align: center;
+    }
+    .back-text {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .back-text {
+        font-size: 20px;
+    }
+    .name-text {
+        font-size: 30px;
+    }
+    .back-container {
+        gap: 25px;
+    }
+    .form-headline {
+        font-size: 30px;
+    }
+    .form-input input {
+        padding: 10px;
+        font-size: 12px;
+    }
 }

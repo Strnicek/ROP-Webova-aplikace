@@ -8,10 +8,9 @@
             </p>
         </section>
         <section class="back-container">
-            <div>
+            <div class="back-inside">
                  <h2 class="back-text"> Vrátit se zpět na hlavní stránku </h2>
-            <h2 class="name-text"> Study<span class="flow">Flow</span></h2>
-
+                <h2 class="name-text"> Study<span class="flow">Flow</span></h2>
             </div>
            
             <NuxtLink to="/" class="back-btn"> Vrátit se </NuxtLink>

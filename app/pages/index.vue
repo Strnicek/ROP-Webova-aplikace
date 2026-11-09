@@ -1,7 +1,11 @@
 <template>
   <LandingPageHeader />
   <LandingPageHero />
-  <LandingPageAbout />
+
+  <article class="about-container">
+     <LandingPageAbout />
+  </article>
+ 
 
   <article class="functions-article">
      <LandingPageFun0 />
