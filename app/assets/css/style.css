@@ -198,6 +198,7 @@ nav {
     font-size: 60px;
     font-weight: 350;
     text-align: center;
+    border: 2px solid red;
 }
 .text-gradient {
     background: linear-gradient(90deg, #9b51e0, #2f80ed);
@@ -211,6 +212,16 @@ nav {
 .main-desc-text {
     color: var(--small-text);
     text-align: center;
+    font-size: 18px;
+}
+
+@media (max-width: 799px) {
+    .main-text{
+        font-size: 38px;
+    }
+    .main-desc-text {
+        font-size: 12px;
+    }
 }
 .main-buttons {
     display: flex;
@@ -277,18 +288,43 @@ nav {
 .dashboard-img {
     width: 650px;
 }
+
+@media (max-width: 799px) {
+    .about {
+        flex-direction: column;
+        padding: 15px;
+    }
+    .about-left {
+        border-right: none;
+        padding-bottom: 30px;
+        border-bottom: 1px solid var(--white-text) ;
+        width: 100%;
+    }
+    .about-right {
+        width: 100%;
+        padding-left: 0;
+        padding-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+    .dashboard-img {
+        width: 400px;
+    }
+}
 .functions-article {
     display: flex;
     background-color: var(--background-2);
     flex-direction: column;
     gap: 100px;
     margin-top: 200px;
+    border: 2px solid yellow;
     padding: 80px 150px 0px 150px;
 }
 .app-headline {
     color: var(--white-text);
     text-align: center;
     font-size: 40px;
+    border: 2px solid red;
 }
 .app-subtitle {
     color: var(--white-text);
@@ -299,10 +335,24 @@ nav {
    flex-direction: column;
    gap:20px;
 }
+
+@media (max-width: 799px) {
+    .functions-article {
+        padding: 50px 20px;
+    }
+    .app-headline {
+        font-size: 30px;
+        width: 100%;
+    }
+    .app-subtitle {
+        font-size: 14px;
+    }
+}
 .functions-row {
     display: flex;
     align-items: center;
     gap: 50px;
+    border: 2px solid red;
 }
 .functions-row.reverse {
     flex-direction: row-reverse;
@@ -312,6 +362,7 @@ nav {
     flex-direction: column;
     width: 40%;
     gap: 20px;
+ 
 }
 .text-left {
     border-right: 2px solid var(--line-color);
@@ -345,6 +396,18 @@ nav {
 .functions-img img {
     max-width: 100%;
     height: auto;
+}
+
+@media (max-width: 799px) {
+    .functions-row {
+        flex-direction: column;
+    }
+    .functions-row.reverse {
+        flex-direction: column;
+    }
+    .functions-text {
+        width: 100%;
+    }
 }
 .last-article {
     background-color: var(--background-2);
