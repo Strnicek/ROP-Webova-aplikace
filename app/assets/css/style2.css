@@ -98,6 +98,10 @@
     border: 1px solid rgba(75, 45, 120, 0.5); 
     box-shadow: 0 0 40px rgba(60, 30, 100, 0.4);
 }
+.register-box {
+    padding-bottom: 20px;
+    gap: 10px;
+}
 .form-top {
     display: flex;
     flex-direction: column;
@@ -167,6 +171,16 @@ form {
     background-color: var(--white-text);
     color: var(--line-color);
     transform: scale(1.03);
+}
+.errorMessage {
+    font-size: 14px;
+    text-align: center;
+    color: red;
+}
+.successMessage {
+    font-size: 14px;
+    text-align: center;
+    color: green;
 }
 
 @media (max-width: 1279px) {

@@ -9,12 +9,12 @@ const passwordAgain = ref('');
 const agreeCheckbox = ref(false);
 
 const errorMessage = ref('');
-const succesMessage = ref('');
+const successMessage = ref('');
 const loading = ref(false);
 
 async function registrace() {
     errorMessage.value = '';
-    succesMessage.value = '';
+    successMessage.value = '';
 
     if(!agreeCheckbox.value) {
         errorMessage.value = "Pro úspěšnou registraci musíte souhlasit s podmínkami";
@@ -30,11 +30,11 @@ async function registrace() {
                 username: username.value,
                 email: email.value,
                 password: password.value,
-                passwordConfirm: passwordAgain.value,
+                passwordAgain: passwordAgain.value,
             }
         });
 
-        succesMessage.value = response.message;
+        successMessage.value = response.message;
 
         username.value = '';
         email.value = '';
@@ -53,7 +53,7 @@ async function registrace() {
 </script>
 
 <template>
-        <article class="form-box">
+        <article class="form-box register-box">
             <section class="form-top">
                 <h2 class="form-headline"> Registrace </h2>
                 <p class="form-subtitle"> Vyplňte následující údaje a vytvořte si účet </p>
@@ -81,12 +81,12 @@ async function registrace() {
                 <div>
                     <label>
                         <input type="checkbox" v-model="agreeCheckbox">
-                        <span> Souhlasím s podmínkami používání a ochranou osobních údajů.  </span>
+                        <span> Souhlasím s podmínkami používání.  </span>
                     </label>
                 </div>
 
-                <p v-if="errorMessage" class="errorMessage"> {{ succesMessage }} </p>
-                <p v-if="succesMessage" class="succesMessage"> {{ errorMessage }}</p>
+                <p v-if="errorMessage" class="errorMessage"> {{ errorMessage }} </p>
+                <p v-if="successMessage" class="successMessage"> {{ successMessage }}</p>
 
                 <button type="submit" class="submit-btn" :disabled="loading">
                     {{ loading ? "Registruji..." : "Registrovat se" }}
