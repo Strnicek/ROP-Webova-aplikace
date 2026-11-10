@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { db } from '../../../prisma/db';
+import { randomBytes, createHash } from 'node:crypto';
 
 
 export default defineEventHandler(async (event) =>  {
@@ -80,6 +81,21 @@ export default defineEventHandler(async (event) =>  {
           passwordHash: passwordHash,
           emailVerifiedAt: null
        });
+
+       const token = randomBytes(32).toString('hex');
+
+       const tokenHash = createHash('sha256')
+        .update(token)
+        .digest('hex');
+
+        const expiresAt = new Date();
+        expiresAt.setHours(expiresAt.getHours() + 24);
+
+        await db.orm.public.EmailVerification.create({
+          userId: newUser.id,
+          tokenHash: tokenHash,
+          expiresAt: expiresAt
+        })
 
        return {
         message: 'Registrace proběhla úspěšně!',

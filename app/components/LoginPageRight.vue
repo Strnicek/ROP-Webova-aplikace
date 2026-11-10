@@ -9,11 +9,13 @@ const errorMessage = ref('');
 const successMessage = ref('');
 const loading = ref(false);
 
+ const user = useState('auth-user');
+
 async function login() {
     errorMessage.value = '';
     successMessage.value = '';
 
-    if(email.value == null || password.value == null) {
+    if(!email.value || !password.value) {
         errorMessage.value = 'Nebyli vyplněny všechny přihlašovací údaje';
         return;
     }
@@ -31,6 +33,12 @@ async function login() {
         });
 
         successMessage.value = response.message;
+
+        const responseUser = await $fetch('/api/auth/me');
+
+        user.value = responseUser.user;
+
+        await navigateTo('/dashboard');
     }
     catch(error) {
         errorMessage.value = error.data?.statusMessage || 'Něco se pokazilo.';
@@ -38,8 +46,6 @@ async function login() {
     finally {
         loading.value = false;
     }
-
-
 }
 </script>
 
