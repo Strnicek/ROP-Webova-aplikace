@@ -20,6 +20,7 @@ model User {
   attempts      TestAttempt[]
   reminders     Reminder[]
   activities    ActivityLog[]
+  emailVerifications EmailVerification[]
 
   createdAt DateTime @default(now()) @onCreate(now())
   updatedAt temporal.UpdatedAt
