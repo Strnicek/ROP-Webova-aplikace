@@ -26,16 +26,23 @@ const message = ref('');
 </script>
 
 <template>
-    <h1> Zapomenuté heslo </h1>
-    <p> zadejte svůj e-mail pro obnovení hesla </p>
+    <article class="password-container">
+        <div class="password-box">
+            <div>
+                <h1 class="password-headline"> Zapomenuté heslo </h1>
+                <p class="password-subtitle"> Zadejte svůj e-mail pro obnovení hesla </p>
+            </div>
+             
+            <form @submit.prevent="resetPassword" >
+                <input type="email" v-model="email" placeholder="Zadejte svůj e-mail" class="password-input">
 
-    <form @submit.prevent="resetPassword">
-        <input type="email" v-model="email" placeholder="Zadejte svůj e-mail">
+                <button type="submit" class="submit-btn"> Odeslat </button>
 
-        <button type="submit"> Odeslat </button>
+                <p v-if="message">{{ message }}</p>
 
-        <p v-if="message">{{ message }}</p>
-
-        <NuxtLink to="/login"> Zpět na přihlášení </NuxtLink>
-    </form>
+                <NuxtLink to="/login" class="verify-btn"> Zpět na přihlášení </NuxtLink>
+            </form>
+        </div>
+    </article>
+    
 </template>

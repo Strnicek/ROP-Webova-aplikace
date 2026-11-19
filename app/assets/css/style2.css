@@ -44,7 +44,7 @@
     background-color: var(--background-2);
     padding: 30px;
     border-radius: 15px;
-     border: 1px solid rgba(75, 45, 120, 0.5); 
+     border: 1px solid rgba(75, 45, 120, 0.5);
     box-shadow: 0 0 40px rgba(60, 30, 100, 0.4);
 }
 .back-btn {
@@ -281,9 +281,61 @@ form {
     background-color: var(--button-bg);
     color: var(--white-text);
     transition: 0.5s all ease;
+    text-align: center;
 }
 .verify-btn:hover {
     background-color: var(--white-text);
     color: var(--button-bg);
+}
+.password-headline {
+    color: var(--white-text);
+    font-size: 30px;
+}
+.password-subtitle {
+    color: var(--white-text);
+    font-size: 14px;
+}
+.password-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 24px;
+}
+.password-box {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    background-color: var(--background-2);
+    color: var(--white-text);
+    border-radius: 15px;
+    padding: 50px;
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box;
+    border: 1px solid rgba(75, 45, 120, 0.5); 
+    box-shadow: 0 0 40px rgba(60, 30, 100, 0.4);
+}
+.password-input {
+    background-color: var(--line-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--white-text);
+    padding: 12px;
+    border-radius: 15px;
+    outline: none;
+    font-size: 16px;
+    box-sizing: border-box;
+    width: 100%;
+}
 
+@media (max-width: 480px) {
+    .password-box {
+        padding: 28px 20px;
+        gap: 32px;
+    }
+    .password-headline {
+        font-size: clamp(28px, 8vw, 26px);
+    }
 }
