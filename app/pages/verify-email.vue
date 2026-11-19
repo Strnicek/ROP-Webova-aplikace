@@ -42,21 +42,26 @@ onMounted(async () => {
 
 <template>
     <article class="email">
-        <h1>Ověření e-mailu</h1>
 
-        <p v-if="loading">
-            Probíhá ověřování e-mailové adresy...
-        </p>
+        <div>
+            <h1 class="verify-email-headline">Ověření e-mailu</h1>
 
-        <p v-if="successMessage" class="success">
-            {{ successMessage }}
-        </p>
+            <p v-if="loading">
+                Probíhá ověřování e-mailové adresy...
+            </p>
 
-        <p v-if="errorMessage" class="error">
-            {{ errorMessage }}
-        </p>
+            <p v-if="successMessage" class="successMessage">
+                {{ successMessage }}
+            </p>
 
-        <NuxtLink v-if="successMessage" to="/login">
+            <p v-if="errorMessage" class="errorMessage">
+                {{ errorMessage }}
+            </p>
+
+        </div>
+    
+
+        <NuxtLink v-if="successMessage" to="/login" class="verify-btn">
             Přejít na přihlášení
         </NuxtLink>
     </article>

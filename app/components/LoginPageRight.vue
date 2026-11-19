@@ -72,7 +72,7 @@ async function login() {
                         Zapamatovat přihlášení
                     </label>
 
-                    <a class="forgot-password"> Zapomenuté heslo? </a>
+                    <NuxtLink to="/forgot-password" class="forgot-password"> Zapomenuté heslo? </NuxtLink>
                 </div>
 
                 <p v-if="errorMessage" class="errorMessage"> {{ errorMessage }}</p>

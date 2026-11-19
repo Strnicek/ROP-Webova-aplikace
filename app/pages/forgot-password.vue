@@ -4,7 +4,23 @@ import { ref } from 'vue';
 const email = ref('');
 const message = ref('');
 
-function resetPassword(params) {
+ async function resetPassword() {
+
+    message.value = '';
+
+    try {
+        const response = await $fetch('api/auth/forgot-password', {
+            method: 'POST',
+            body: {
+                email: email.value
+            }
+        });
+
+        message.value = response.message;
+    }
+    catch(error) {
+        message.value = error.data?.statusMessage || 'Něco se pokazilo.';
+    }
     
 }
 </script>

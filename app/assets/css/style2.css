@@ -260,3 +260,30 @@ form {
         font-size: 12px;
     }
 }
+
+.email {
+    height: 100vh;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.verify-email-headline {
+    color: var(--white-text);
+    font-size: 60px;
+}
+.verify-btn {
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 15px 25px;
+    background-color: var(--button-bg);
+    color: var(--white-text);
+    transition: 0.5s all ease;
+}
+.verify-btn:hover {
+    background-color: var(--white-text);
+    color: var(--button-bg);
+
+}

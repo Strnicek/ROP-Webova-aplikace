@@ -38,13 +38,13 @@ export default defineEventHandler(async (event) => {
         });
     }
 
-    /*if(user.emailVerifiedAt == null) {
+    if(user.emailVerifiedAt == null) {
         throw createError({
             statusCode: 403,
             statusMessage: 'Nejdříve si ověřte svůj e-mail'
         });
     }
-    */
+    
 
     const token = randomBytes(32).toString('hex');
 
