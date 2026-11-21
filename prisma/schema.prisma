@@ -12,6 +12,7 @@ model User {
   name         String?
   passwordHash String
   emailVerifiedAt DateTime?
+  twoFactorAuth TwoFactorAuth?
 
   sessions      Session[]
   passwordResets PasswordReset[]
@@ -21,6 +22,7 @@ model User {
   reminders     Reminder[]
   activities    ActivityLog[]
   emailVerifications EmailVerification[]
+  recoveryCodes TwoFactorRecoveryCode[]
 
   createdAt DateTime @default(now()) @onCreate(now())
   updatedAt temporal.UpdatedAt
@@ -221,4 +223,23 @@ model ActivityLog {
   createdAt DateTime @default(now()) @onCreate(now())
 
   @@index([userId, createdAt])
+}
+
+model TwoFactorAuth {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  secret    String
+  enabled   Boolean   @default(false)
+  enabledAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model TwoFactorRecoveryCode {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  codeHash  String    @unique
+  usedAt    DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

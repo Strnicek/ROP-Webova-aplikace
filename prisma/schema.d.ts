@@ -23,7 +23,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'054063d0376eb14edb9f6244693e4d14f3a0cef3db4464be6586325629b164dd'>;
+  StorageHashBase<'09a28cfca078859ded0552e750a31c643bda15dd819c9f19b9f17a7a3cf46e04'>;
 export type ExecutionHash =
   ExecutionHashBase<'16c7ac473a11c34ec7d8f70e4840196f3f87ae84a69d9bf1fc78a8115e63b0f1'>;
 export type ProfileHash =
@@ -454,6 +454,23 @@ export namespace Models {
     test: public_Test;
     readonly [RelationKeys]?: 'test';
   };
+  export type public_TwoFactorAuth = {
+    enabled: FieldOutputTypes['public']['TwoFactorAuth']['enabled'];
+    enabledAt: FieldOutputTypes['public']['TwoFactorAuth']['enabledAt'];
+    id: FieldOutputTypes['public']['TwoFactorAuth']['id'];
+    secret: FieldOutputTypes['public']['TwoFactorAuth']['secret'];
+    userId: FieldOutputTypes['public']['TwoFactorAuth']['userId'];
+    user: public_User;
+    readonly [RelationKeys]?: 'user';
+  };
+  export type public_TwoFactorRecoveryCode = {
+    codeHash: FieldOutputTypes['public']['TwoFactorRecoveryCode']['codeHash'];
+    id: FieldOutputTypes['public']['TwoFactorRecoveryCode']['id'];
+    usedAt: FieldOutputTypes['public']['TwoFactorRecoveryCode']['usedAt'];
+    userId: FieldOutputTypes['public']['TwoFactorRecoveryCode']['userId'];
+    user: public_User;
+    readonly [RelationKeys]?: 'user';
+  };
   export type public_User = {
     createdAt: FieldOutputTypes['public']['User']['createdAt'];
     email: FieldOutputTypes['public']['User']['email'];
@@ -465,19 +482,25 @@ export namespace Models {
     username: FieldOutputTypes['public']['User']['username'];
     activities: public_ActivityLog[];
     attempts: public_TestAttempt[];
+    emailVerifications: public_EmailVerification[];
     passwordResets: public_PasswordReset[];
+    recoveryCodes: public_TwoFactorRecoveryCode[];
     reminders: public_Reminder[];
     sessions: public_Session[];
     subjects: public_Subject[];
     tests: public_Test[];
+    twoFactorAuth: public_TwoFactorAuth | null;
     readonly [RelationKeys]?:
       | 'activities'
       | 'attempts'
+      | 'emailVerifications'
       | 'passwordResets'
+      | 'recoveryCodes'
       | 'reminders'
       | 'sessions'
       | 'subjects'
-      | 'tests';
+      | 'tests'
+      | 'twoFactorAuth';
   };
 }
 
@@ -497,6 +520,8 @@ export declare const models: {
     TestAttempt: Models.public_TestAttempt;
     TestNote: Models.public_TestNote;
     TestShare: Models.public_TestShare;
+    TwoFactorAuth: Models.public_TwoFactorAuth;
+    TwoFactorRecoveryCode: Models.public_TwoFactorRecoveryCode;
     User: Models.public_User;
   };
 };
@@ -1529,6 +1554,123 @@ type ContractBase = Omit<
                 },
               ];
             };
+            readonly TwoFactorAuth: {
+              columns: {
+                readonly enabled: {
+                  readonly dataType: 'pg/bool';
+                  readonly codecId: 'pg/bool@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/bool@1', false>;
+                  };
+                  readonly many: false;
+                };
+                readonly enabledAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-date@1';
+                  readonly nullable: true;
+                  readonly typeParams: { readonly precision: 3 };
+                  readonly many: false;
+                };
+                readonly id: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'function';
+                    readonly expression: 'autoincrement()';
+                  };
+                  readonly many: false;
+                };
+                readonly secret: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly userId: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [{ readonly columns: readonly ['userId'] }];
+              indexes: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'TwoFactorAuth';
+                    readonly columns: readonly ['userId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'User';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+              ];
+            };
+            readonly TwoFactorRecoveryCode: {
+              columns: {
+                readonly codeHash: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly id: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'function';
+                    readonly expression: 'autoincrement()';
+                  };
+                  readonly many: false;
+                };
+                readonly usedAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-date@1';
+                  readonly nullable: true;
+                  readonly typeParams: { readonly precision: 3 };
+                  readonly many: false;
+                };
+                readonly userId: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [{ readonly columns: readonly ['codeHash'] }];
+              indexes: readonly [
+                {
+                  readonly name: 'TwoFactorRecoveryCode_userId_idx_a489d58a';
+                  readonly prefix: 'TwoFactorRecoveryCode_userId_idx';
+                  readonly columns: readonly ['userId'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'TwoFactorRecoveryCode';
+                    readonly columns: readonly ['userId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'User';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+              ];
+            };
             readonly User: {
               columns: {
                 readonly createdAt: {
@@ -1639,6 +1781,14 @@ type ContractBase = Omit<
     };
     readonly TestNote: { readonly namespace: 'public' & NamespaceId; readonly model: 'TestNote' };
     readonly TestShare: { readonly namespace: 'public' & NamespaceId; readonly model: 'TestShare' };
+    readonly TwoFactorAuth: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'TwoFactorAuth';
+    };
+    readonly TwoFactorRecoveryCode: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'TwoFactorRecoveryCode';
+    };
     readonly User: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
   };
   readonly domain: {
@@ -2557,6 +2707,101 @@ type ContractBase = Omit<
               };
             };
           };
+          readonly TwoFactorAuth: {
+            readonly fields: {
+              readonly enabled: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/bool@1' };
+              };
+              readonly enabledAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-date@1';
+                  readonly typeParams: { readonly precision: 3 };
+                };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly secret: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly userId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+            };
+            readonly relations: {
+              readonly user: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['userId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'TwoFactorAuth';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly enabled: { readonly column: 'enabled' };
+                readonly enabledAt: { readonly column: 'enabledAt' };
+                readonly id: { readonly column: 'id' };
+                readonly secret: { readonly column: 'secret' };
+                readonly userId: { readonly column: 'userId' };
+              };
+            };
+          };
+          readonly TwoFactorRecoveryCode: {
+            readonly fields: {
+              readonly codeHash: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly usedAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-date@1';
+                  readonly typeParams: { readonly precision: 3 };
+                };
+              };
+              readonly userId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+            };
+            readonly relations: {
+              readonly user: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['userId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'TwoFactorRecoveryCode';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly codeHash: { readonly column: 'codeHash' };
+                readonly id: { readonly column: 'id' };
+                readonly usedAt: { readonly column: 'usedAt' };
+                readonly userId: { readonly column: 'userId' };
+              };
+            };
+          };
           readonly User: {
             readonly fields: {
               readonly createdAt: {
@@ -2627,10 +2872,32 @@ type ContractBase = Omit<
                   readonly targetFields: readonly ['userId'];
                 };
               };
+              readonly emailVerifications: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'EmailVerification';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['userId'];
+                };
+              };
               readonly passwordResets: {
                 readonly to: {
                   readonly namespace: 'public' & NamespaceId;
                   readonly model: 'PasswordReset';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['userId'];
+                };
+              };
+              readonly recoveryCodes: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'TwoFactorRecoveryCode';
                 };
                 readonly cardinality: '1:N';
                 readonly on: {
@@ -2674,6 +2941,18 @@ type ContractBase = Omit<
               readonly tests: {
                 readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Test' };
                 readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['userId'];
+                };
+              };
+              readonly twoFactorAuth: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'TwoFactorAuth';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
                 readonly on: {
                   readonly localFields: readonly ['id'];
                   readonly targetFields: readonly ['userId'];
