@@ -1,9 +1,5 @@
 <script setup>
 
-import { ref } from 'vue';
-
-const showSettings = ref(false);
-
 const user = useState('auth-user');
 
 async function logout() {
@@ -83,7 +79,7 @@ async function logout() {
 
     </nav>
 
-    <div class="sidebar-bottom" @click="showSettings = true">
+    <div class="sidebar-bottom">
 
         <a href="#" class="sidebar-link">
             <svg width="34" height="34" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,9 +99,4 @@ async function logout() {
     </div>
 
 </aside>
-
-<SettingsModal
-    v-if="showSettings"
-    @close="showSettings = false"
-/>
 </template>

@@ -60,14 +60,6 @@
       "model": "TestShare",
       "namespace": "public"
     },
-    "TwoFactorAuth": {
-      "model": "TwoFactorAuth",
-      "namespace": "public"
-    },
-    "TwoFactorRecoveryCode": {
-      "model": "TwoFactorRecoveryCode",
-      "namespace": "public"
-    },
     "User": {
       "model": "User",
       "namespace": "public"
@@ -1494,158 +1486,6 @@
               "table": "TestShare"
             }
           },
-          "TwoFactorAuth": {
-            "fields": {
-              "enabled": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/bool@1",
-                  "kind": "scalar"
-                }
-              },
-              "enabledAt": {
-                "nullable": true,
-                "type": {
-                  "codecId": "pg/timestamptz-date@1",
-                  "kind": "scalar",
-                  "typeParams": {
-                    "precision": 3
-                  }
-                }
-              },
-              "id": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/int4@1",
-                  "kind": "scalar"
-                }
-              },
-              "secret": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/text@1",
-                  "kind": "scalar"
-                }
-              },
-              "userId": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/int4@1",
-                  "kind": "scalar"
-                }
-              }
-            },
-            "relations": {
-              "user": {
-                "cardinality": "N:1",
-                "nullable": false,
-                "on": {
-                  "localFields": [
-                    "userId"
-                  ],
-                  "targetFields": [
-                    "id"
-                  ]
-                },
-                "to": {
-                  "model": "User",
-                  "namespace": "public"
-                }
-              }
-            },
-            "storage": {
-              "fields": {
-                "enabled": {
-                  "column": "enabled"
-                },
-                "enabledAt": {
-                  "column": "enabledAt"
-                },
-                "id": {
-                  "column": "id"
-                },
-                "secret": {
-                  "column": "secret"
-                },
-                "userId": {
-                  "column": "userId"
-                }
-              },
-              "namespaceId": "public",
-              "table": "TwoFactorAuth"
-            }
-          },
-          "TwoFactorRecoveryCode": {
-            "fields": {
-              "codeHash": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/text@1",
-                  "kind": "scalar"
-                }
-              },
-              "id": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/int4@1",
-                  "kind": "scalar"
-                }
-              },
-              "usedAt": {
-                "nullable": true,
-                "type": {
-                  "codecId": "pg/timestamptz-date@1",
-                  "kind": "scalar",
-                  "typeParams": {
-                    "precision": 3
-                  }
-                }
-              },
-              "userId": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/int4@1",
-                  "kind": "scalar"
-                }
-              }
-            },
-            "relations": {
-              "user": {
-                "cardinality": "N:1",
-                "nullable": false,
-                "on": {
-                  "localFields": [
-                    "userId"
-                  ],
-                  "targetFields": [
-                    "id"
-                  ]
-                },
-                "to": {
-                  "model": "User",
-                  "namespace": "public"
-                }
-              }
-            },
-            "storage": {
-              "fields": {
-                "codeHash": {
-                  "column": "codeHash"
-                },
-                "id": {
-                  "column": "id"
-                },
-                "usedAt": {
-                  "column": "usedAt"
-                },
-                "userId": {
-                  "column": "userId"
-                }
-              },
-              "namespaceId": "public",
-              "table": "TwoFactorRecoveryCode"
-            }
-          },
           "User": {
             "fields": {
               "createdAt": {
@@ -1745,21 +1585,6 @@
                   "namespace": "public"
                 }
               },
-              "emailVerifications": {
-                "cardinality": "1:N",
-                "on": {
-                  "localFields": [
-                    "id"
-                  ],
-                  "targetFields": [
-                    "userId"
-                  ]
-                },
-                "to": {
-                  "model": "EmailVerification",
-                  "namespace": "public"
-                }
-              },
               "passwordResets": {
                 "cardinality": "1:N",
                 "on": {
@@ -1772,21 +1597,6 @@
                 },
                 "to": {
                   "model": "PasswordReset",
-                  "namespace": "public"
-                }
-              },
-              "recoveryCodes": {
-                "cardinality": "1:N",
-                "on": {
-                  "localFields": [
-                    "id"
-                  ],
-                  "targetFields": [
-                    "userId"
-                  ]
-                },
-                "to": {
-                  "model": "TwoFactorRecoveryCode",
                   "namespace": "public"
                 }
               },
@@ -1847,22 +1657,6 @@
                 },
                 "to": {
                   "model": "Test",
-                  "namespace": "public"
-                }
-              },
-              "twoFactorAuth": {
-                "cardinality": "1:1",
-                "nullable": true,
-                "on": {
-                  "localFields": [
-                    "id"
-                  ],
-                  "targetFields": [
-                    "userId"
-                  ]
-                },
-                "to": {
-                  "model": "TwoFactorAuth",
                   "namespace": "public"
                 }
               }
@@ -3224,158 +3018,6 @@
                 }
               ]
             },
-            "TwoFactorAuth": {
-              "columns": {
-                "enabled": {
-                  "codecId": "pg/bool@1",
-                  "dataType": "pg/bool",
-                  "default": {
-                    "kind": "literal",
-                    "value": false
-                  },
-                  "nullable": false
-                },
-                "enabledAt": {
-                  "codecId": "pg/timestamptz-date@1",
-                  "dataType": "pg/timestamptz",
-                  "nullable": true,
-                  "typeParams": {
-                    "precision": 3
-                  }
-                },
-                "id": {
-                  "codecId": "pg/int4@1",
-                  "dataType": "pg/int4",
-                  "default": {
-                    "expression": "autoincrement()",
-                    "kind": "function"
-                  },
-                  "nullable": false
-                },
-                "secret": {
-                  "codecId": "pg/text@1",
-                  "dataType": "pg/text",
-                  "nullable": false
-                },
-                "userId": {
-                  "codecId": "pg/int4@1",
-                  "dataType": "pg/int4",
-                  "nullable": false
-                }
-              },
-              "foreignKeys": [
-                {
-                  "index": {
-                    "unique": [
-                      "userId"
-                    ]
-                  },
-                  "onDelete": "cascade",
-                  "source": {
-                    "columns": [
-                      "userId"
-                    ],
-                    "namespaceId": "public",
-                    "tableName": "TwoFactorAuth"
-                  },
-                  "target": {
-                    "columns": [
-                      "id"
-                    ],
-                    "namespaceId": "public",
-                    "tableName": "User"
-                  }
-                }
-              ],
-              "indexes": [],
-              "primaryKey": {
-                "columns": [
-                  "id"
-                ]
-              },
-              "uniques": [
-                {
-                  "columns": [
-                    "userId"
-                  ]
-                }
-              ]
-            },
-            "TwoFactorRecoveryCode": {
-              "columns": {
-                "codeHash": {
-                  "codecId": "pg/text@1",
-                  "dataType": "pg/text",
-                  "nullable": false
-                },
-                "id": {
-                  "codecId": "pg/int4@1",
-                  "dataType": "pg/int4",
-                  "default": {
-                    "expression": "autoincrement()",
-                    "kind": "function"
-                  },
-                  "nullable": false
-                },
-                "usedAt": {
-                  "codecId": "pg/timestamptz-date@1",
-                  "dataType": "pg/timestamptz",
-                  "nullable": true,
-                  "typeParams": {
-                    "precision": 3
-                  }
-                },
-                "userId": {
-                  "codecId": "pg/int4@1",
-                  "dataType": "pg/int4",
-                  "nullable": false
-                }
-              },
-              "foreignKeys": [
-                {
-                  "index": {
-                    "name": "TwoFactorRecoveryCode_userId_idx_a489d58a"
-                  },
-                  "onDelete": "cascade",
-                  "source": {
-                    "columns": [
-                      "userId"
-                    ],
-                    "namespaceId": "public",
-                    "tableName": "TwoFactorRecoveryCode"
-                  },
-                  "target": {
-                    "columns": [
-                      "id"
-                    ],
-                    "namespaceId": "public",
-                    "tableName": "User"
-                  }
-                }
-              ],
-              "indexes": [
-                {
-                  "columns": [
-                    "userId"
-                  ],
-                  "name": "TwoFactorRecoveryCode_userId_idx_a489d58a",
-                  "prefix": "TwoFactorRecoveryCode_userId_idx",
-                  "unique": false
-                }
-              ],
-              "primaryKey": {
-                "columns": [
-                  "id"
-                ]
-              },
-              "uniques": [
-                {
-                  "columns": [
-                    "codeHash"
-                  ]
-                }
-              ]
-            },
             "User": {
               "columns": {
                 "createdAt": {
@@ -3462,7 +3104,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "09a28cfca078859ded0552e750a31c643bda15dd819c9f19b9f17a7a3cf46e04"
+    "storageHash": "054063d0376eb14edb9f6244693e4d14f3a0cef3db4464be6586325629b164dd"
   },
   "execution": {
     "executionHash": "16c7ac473a11c34ec7d8f70e4840196f3f87ae84a69d9bf1fc78a8115e63b0f1",
