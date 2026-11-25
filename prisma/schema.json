@@ -16,6 +16,10 @@
       "model": "AttemptAnswer",
       "namespace": "public"
     },
+    "EmailTwoFactorCode": {
+      "model": "EmailTwoFactorCode",
+      "namespace": "public"
+    },
     "EmailVerification": {
       "model": "EmailVerification",
       "namespace": "public"
@@ -341,6 +345,100 @@
               },
               "namespaceId": "public",
               "table": "AttemptAnswer"
+            }
+          },
+          "EmailTwoFactorCode": {
+            "fields": {
+              "attempts": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "codeHash": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "expiresAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-date@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "precision": 3
+                  }
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "usedAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-date@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "precision": 3
+                  }
+                }
+              },
+              "userId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "user": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "userId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "User",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "attempts": {
+                  "column": "attempts"
+                },
+                "codeHash": {
+                  "column": "codeHash"
+                },
+                "expiresAt": {
+                  "column": "expiresAt"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "usedAt": {
+                  "column": "usedAt"
+                },
+                "userId": {
+                  "column": "userId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "EmailTwoFactorCode"
             }
           },
           "EmailVerification": {
@@ -1505,6 +1603,13 @@
                   "kind": "scalar"
                 }
               },
+              "emailTwoFactorEnabled": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/bool@1",
+                  "kind": "scalar"
+                }
+              },
               "emailVerifiedAt": {
                 "nullable": true,
                 "type": {
@@ -1582,6 +1687,36 @@
                 },
                 "to": {
                   "model": "TestAttempt",
+                  "namespace": "public"
+                }
+              },
+              "emailTwoFactorCodes": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "userId"
+                  ]
+                },
+                "to": {
+                  "model": "EmailTwoFactorCode",
+                  "namespace": "public"
+                }
+              },
+              "emailVerifications": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "userId"
+                  ]
+                },
+                "to": {
+                  "model": "EmailVerification",
                   "namespace": "public"
                 }
               },
@@ -1668,6 +1803,9 @@
                 },
                 "email": {
                   "column": "email"
+                },
+                "emailTwoFactorEnabled": {
+                  "column": "emailTwoFactorEnabled"
                 },
                 "emailVerifiedAt": {
                   "column": "emailVerifiedAt"
@@ -1998,6 +2136,92 @@
                   ]
                 }
               ]
+            },
+            "EmailTwoFactorCode": {
+              "columns": {
+                "attempts": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "kind": "literal",
+                    "value": 0
+                  },
+                  "nullable": false
+                },
+                "codeHash": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "expiresAt": {
+                  "codecId": "pg/timestamptz-date@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": false,
+                  "typeParams": {
+                    "precision": 3
+                  }
+                },
+                "id": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "expression": "autoincrement()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "usedAt": {
+                  "codecId": "pg/timestamptz-date@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true,
+                  "typeParams": {
+                    "precision": 3
+                  }
+                },
+                "userId": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "EmailTwoFactorCode_userId_idx_a489d58a"
+                  },
+                  "onDelete": "cascade",
+                  "source": {
+                    "columns": [
+                      "userId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "EmailTwoFactorCode"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "User"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "userId"
+                  ],
+                  "name": "EmailTwoFactorCode_userId_idx_a489d58a",
+                  "prefix": "EmailTwoFactorCode_userId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
             },
             "EmailVerification": {
               "columns": {
@@ -3037,6 +3261,15 @@
                   "dataType": "pg/text",
                   "nullable": false
                 },
+                "emailTwoFactorEnabled": {
+                  "codecId": "pg/bool@1",
+                  "dataType": "pg/bool",
+                  "default": {
+                    "kind": "literal",
+                    "value": false
+                  },
+                  "nullable": false
+                },
                 "emailVerifiedAt": {
                   "codecId": "pg/timestamptz-date@1",
                   "dataType": "pg/timestamptz",
@@ -3104,7 +3337,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "054063d0376eb14edb9f6244693e4d14f3a0cef3db4464be6586325629b164dd"
+    "storageHash": "67fa4e358fae57862d5e4612590cc64556f570a79b810c0698136520eaba9947"
   },
   "execution": {
     "executionHash": "16c7ac473a11c34ec7d8f70e4840196f3f87ae84a69d9bf1fc78a8115e63b0f1",

@@ -1,0 +1,221 @@
+[
+  {
+    "id": "table.EmailTwoFactorCode",
+    "label": "Create table \"EmailTwoFactorCode\"",
+    "summary": "Creates table \"EmailTwoFactorCode\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "EmailTwoFactorCode"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"EmailTwoFactorCode\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"EmailTwoFactorCode\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"EmailTwoFactorCode\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"EmailTwoFactorCode\"",
+        "sql": "CREATE TABLE \"public\".\"EmailTwoFactorCode\" (\n  \"attempts\" int4 DEFAULT 0 NOT NULL,\n  \"codeHash\" text NOT NULL,\n  \"expiresAt\" timestamptz(3) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"usedAt\" timestamptz(3),\n  \"userId\" int4 NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"EmailTwoFactorCode\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"EmailTwoFactorCode\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"EmailTwoFactorCode\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "column.public.User.emailTwoFactorEnabled",
+    "label": "Add column \"emailTwoFactorEnabled\" to \"User\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "emailTwoFactorEnabled",
+        "table": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"emailTwoFactorEnabled\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "emailTwoFactorEnabled"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"emailTwoFactorEnabled\" on \"User\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"emailTwoFactorEnabled\"",
+        "sql": "ALTER TABLE \"public\".\"User\" ADD COLUMN \"emailTwoFactorEnabled\" bool DEFAULT false NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"emailTwoFactorEnabled\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "emailTwoFactorEnabled"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"emailTwoFactorEnabled\" on \"User\""
+        }
+      },
+      {
+        "description": "verify column \"emailTwoFactorEnabled\" has type \"boolean\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "emailTwoFactorEnabled",
+          "boolean"
+        ]
+      },
+      {
+        "description": "verify column \"emailTwoFactorEnabled\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "emailTwoFactorEnabled",
+          "NO"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.EmailTwoFactorCode.EmailTwoFactorCode_userId_idx_a489d58a",
+    "label": "Create index \"EmailTwoFactorCode_userId_idx_a489d58a\" on \"EmailTwoFactorCode\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "EmailTwoFactorCode_userId_idx_a489d58a",
+        "table": "EmailTwoFactorCode"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"EmailTwoFactorCode_userId_idx_a489d58a\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"EmailTwoFactorCode_userId_idx_a489d58a\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"EmailTwoFactorCode_userId_idx_a489d58a\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"EmailTwoFactorCode_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"EmailTwoFactorCode_userId_idx_a489d58a\" ON \"public\".\"EmailTwoFactorCode\" (\"userId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"EmailTwoFactorCode_userId_idx_a489d58a\" exists on \"EmailTwoFactorCode\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"EmailTwoFactorCode_userId_idx_a489d58a\"",
+          "i",
+          "I",
+          "\"public\".\"EmailTwoFactorCode\"",
+          "btree",
+          "[\"userId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.EmailTwoFactorCode.EmailTwoFactorCode_userId_fkey",
+    "label": "Add foreign key \"EmailTwoFactorCode_userId_fkey\" on \"EmailTwoFactorCode\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "EmailTwoFactorCode_userId_fkey",
+        "table": "EmailTwoFactorCode"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"EmailTwoFactorCode_userId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "EmailTwoFactorCode_userId_fkey",
+          "public",
+          "\"public\".\"EmailTwoFactorCode\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"EmailTwoFactorCode_userId_fkey\" on \"EmailTwoFactorCode\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"EmailTwoFactorCode_userId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"EmailTwoFactorCode\"\nADD CONSTRAINT \"EmailTwoFactorCode_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"User\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"EmailTwoFactorCode_userId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "EmailTwoFactorCode_userId_fkey",
+          "public",
+          "\"public\".\"EmailTwoFactorCode\"",
+          "f",
+          "[\"userId\"]",
+          "\"public\".\"User\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  }
+]

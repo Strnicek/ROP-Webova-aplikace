@@ -28,9 +28,9 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailInputCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!emailCheck.test(email)) {
+  if (!emailInputCheck.test(email)) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Zadejte platnou e-mailovou adresu.'

@@ -40,6 +40,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    cursor: pointer;
     padding: 10px 15px;
     color: var(--white-text);
     text-decoration: none;
@@ -126,4 +127,80 @@
 }
 .nav-title {
     color: var(--white-text);
+}
+.setting-window {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.settings-inside {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 450px;
+    max-width: 90%;
+    padding: 40px;
+    background-color: var(--background-2);
+    color: var(--white-text);
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+.settings-inside-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--white-text);
+    font-size: 20px;
+    cursor: pointer;
+}
+.settings-inside h2 {
+    margin-top: 0;
+}
+.settings-inside p {
+    color: var(--small-text);
+    font-size: 12px;
+}
+.settings-form {
+    display: flex;
+    justify-content: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+.settings-form input {
+    background-color: var(--line-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--white-text);
+    padding: 12px;
+    border-radius: 15px;
+    outline: none;
+    font-size: 16px;
+}
+.two-factor-btn {
+    background-color: var(--line-color);
+    color: var(--white-text);
+    border: none;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    transition: 0.3s all ease;
+}
+.two-factor-btn:hover {
+    background-color: var(--white-text);
+    color: var(--line-color);
+    transform: scale(1.03);
 }
