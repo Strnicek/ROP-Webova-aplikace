@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { db } from '../../../prisma/db';
 import { getUserFromSession } from '../../utils/auth';
+import { rateLimit } from '../../utils/rate-limit';
 
 export default defineEventHandler(async (event) => {
     const user = await getUserFromSession(event);
@@ -11,6 +12,8 @@ export default defineEventHandler(async (event) => {
             statusMessage: 'Nejste přihlášen.'
         });
     }
+
+    rateLimit(`enable-2fa:${user.id}`, 5, 15);
 
      const body = await readBody(event);
      const password = body?.password;

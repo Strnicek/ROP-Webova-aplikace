@@ -3,6 +3,7 @@ import { randomBytes, createHash, createHmac } from "node:crypto";
 import { db } from '../../../prisma/db';
 import { generateEmailCode, hashEmailCode } from '../../utils/email-2fa';
 import { sendEmail } from '../../utils/mailer';
+import { rateLimit } from '../../utils/rate-limit';
 
 export default defineEventHandler(async (event) => {
 
@@ -11,6 +12,9 @@ export default defineEventHandler(async (event) => {
     const email = body?.email?.trim().toLowerCase();
     const password = body?.password;
     const rememberMe = body?.rememberMe === true;
+
+    const ip = getRequestIP(event, { xForwardedFor: false }) || 'unknown';
+    rateLimit(`login:${ip}`, 10, 15);
 
     if(typeof email !== 'string' || typeof password !== 'string' || !email || !password) {
         throw createError({
