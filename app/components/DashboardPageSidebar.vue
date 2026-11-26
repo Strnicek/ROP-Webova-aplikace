@@ -40,15 +40,15 @@ async function logout() {
 
     <nav class="sidebar-nav">
 
-        <a href="#" class="sidebar-link">
+        <NuxtLink to="/dashboard" class="sidebar-link">
             <svg width="34" height="34" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M13.5 42.75H20.25V29.25H33.75V42.75H40.5V22.5L27 12.375L13.5 22.5V42.75ZM9 47.25V20.25L27 6.75L45 20.25V47.25H29.25V33.75H24.75V47.25H9Z" fill="#E3E3E3"/>
             </svg>
 
             <span class="sidebar-nav-headline">Předměty</span>
-        </a>
+        </NuxtLink>
 
-        <a href="#" class="sidebar-link">
+        <NuxtLink to="/dashboardStats" class="sidebar-link">
             <svg width="34" height="34" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_150_118)">
             <path d="M9 42.75H18V24.75H9V42.75ZM22.5 42.75H31.5V11.25H22.5V42.75ZM36 42.75H45V29.25H36V42.75ZM4.5 47.25V20.25H18V6.75H36V24.75H49.5V47.25H4.5Z" fill="#E3E3E3"/>
@@ -61,7 +61,7 @@ async function logout() {
             </svg>
 
             <span class="sidebar-nav-headline">Statistiky</span>
-        </a>
+        </NuxtLink>
 
         <a href="#" class="sidebar-link">
             <svg width="34" height="34" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
