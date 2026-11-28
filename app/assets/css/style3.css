@@ -188,7 +188,7 @@
     font-size: 16px;
 }
 .two-factor-btn {
-    background-color: var(--line-color);
+    background-color: var(--button-bg);
     color: var(--white-text);
     border: none;
     padding: 15px;
@@ -201,16 +201,16 @@
 }
 .two-factor-btn:hover {
     background-color: var(--white-text);
-    color: var(--line-color);
+    color: var(--button-bg);
     transform: scale(1.03);
 }
 .stats-grid {
    display: grid;
    grid-template-columns: repeat(2, minmax(0, 1fr)); 
-   gap: 35px 105px;
-   max-width: 1200px;
+   gap: 25px 105px;
+   max-width: 1400px;
    width: 100%;
-   margin-top: 50px;
+   margin-top: 30px;
 }
 .stats-card {
     background-color: var(--background-2);
@@ -229,9 +229,13 @@
     padding: 25px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     min-height: 120px;
     box-sizing: border-box;
+}
+.stats-card-bar {
+    max-width: 70%;
+    width: 100%;
 }
 .stats-card-title {
     color: var(--white-text);
@@ -263,4 +267,166 @@
     width: 68%;
     height: 100%;
     background-color: var(--line-color);
+}
+.stats-chart-container {
+    position: relative;
+    height: 170px;
+    width: 100%;
+    margin-top: 25px;
+}
+.stats-chart {
+    background-color: var(--background-2);
+    border-radius: 15px;
+    padding: 25px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    align-self: center;
+    grid-column: 1 / -1;
+}
+.stats-chart-title {
+    font-size: 20px;
+    color: var(--white-text);
+}
+.tests-page-content {
+    display: flex;
+    flex-direction: column;
+}
+.tests-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+}
+.tests-filter {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 20px;
+}
+.tests-filter select {
+    background-color: var(--button-bg);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: var(--white-text);
+    cursor: pointer;
+}
+.tests-empty {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    border: 1px solid var(--line-color);
+    border-radius: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}
+.tests-empty p {
+    color: var(--white-text);
+    font-size: 18px;
+    text-align: center;
+}
+.calendar {
+    width: 100%;
+    max-width: 1250px;
+    margin: 100px auto 0;
+    color: var(--white-text);
+}
+.calendar-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+.calendar-nav h3 {
+    color: var(--white-text);
+    font-size: 20px;
+    font-weight: 400;
+}
+.calendar-nav button {
+    background: none;
+    border: none;
+    color: var(--button-bg);
+    font-size: 28px;
+    cursor: pointer;
+}
+.calendar-add-btn {
+    background-color: var(--button-bg);
+    color: var(--white-text);
+    padding: 10px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.calendar-week {
+    text-align: center;
+    font-size: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-color);
+}
+.calendar-cell {
+    height: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border-right: 1px solid var(--line-color);
+}
+.calendar-cell:nth-child(7n) {
+    border-right: none;
+}
+.calendar-day {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    color: var(--white-text);
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+.calendar-day:hover {
+    background-color: var(--button-bg);
+}
+.calendar-day.selected-day {
+    background-color: #432663;
+}
+@media (max-width: 650px) {
+    .calendar {
+        margin-top: 20px;
+    }
+
+    .calendar-top {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .calendar-nav {
+        gap: 15px;
+    }
+
+    .calendar-cell {
+        height: 65px;
+        padding-top: 10px;
+    }
+
+    .calendar-day {
+        width: 35px;
+        height: 35px;
+        font-size: 15px;
+    }
+
+    .calendar-week {
+        font-size: 14px;
+    }
 }

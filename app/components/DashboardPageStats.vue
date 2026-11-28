@@ -1,3 +1,62 @@
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import Chart from 'chart.js/auto';
+
+const canvas = ref('');
+let chart = null;
+
+onMounted(() => {
+    chart = new Chart(canvas.value, {
+        type: 'bar',
+
+        data: {
+            labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'],
+
+            datasets: [{
+                data: [7, 9, 4, 10, 7, 2, 3],
+                backgroundColor: '#2C2A4D'
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    border: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#E3E3E3'
+                    }
+                },
+
+                y: {
+                    display: false,
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+});
+
+onUnmounted(() => {
+    if (chart) {
+        chart.destroy();
+    }
+});
+</script>
+
 <template>
     <article class="stats-grid">
         <section class="stats-card">
@@ -26,13 +85,17 @@
 
         <section class="stats-card2">
             <p class="stats-card-title"> Celková úspěšnost v testech </p>
-            <div class="stats-card-flex">
-                <span class="stats-card-value"> 68% </span>
-            </div>
 
-            <div class="stats-card-progress">
-                <div class="progress-fill"></div>
+            <div class="stats-card-bar">
+                <div class="stats-card-flex">
+                    <span class="stats-card-value"> 68% </span>
+                </div>
+
+                <div class="stats-card-progress">
+                    <div class="progress-fill"></div>
+                </div>
             </div>
+            
         </section>
 
         <section class="stats-card">
@@ -45,6 +108,14 @@
             </div>
 
             <p class="stats-card-bottom"> Celkem dokončeno </p>
+        </section>
+
+        <section class="stats-chart">
+            <h3 class="stats-chart-title"> Aktivita za posledních 7 dní </h3>
+
+            <div class="stats-chart-container">
+                <canvas ref="canvas"></canvas>
+            </div>
         </section>
     </article>
 </template>
